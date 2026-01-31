@@ -79,6 +79,9 @@ setup:
 	@mdo env PRESTART="${PRESTART}" POSTSTART="${POSTSTART}" PRESTOP="${PRESTOP}" POSTSTOP="${POSTSTOP}" OS_VERSION="${VERSION}" UPDATE="${UPDATE}" DHCP="${DHCP}" ALLOW="${ALLOW}" PORTS="${PORTS}" reggae mkjail ${MKJAIL_OPTIONS} ${SERVICE}
 .endif
 .if ${DEVEL_MODE} == "YES"
+.if !exists(${BASE_WORKDIR}/${SERVICE}/usr/src)
+	@mdo mkdir ${BASE_WORKDIR}/${SERVICE}/usr/src >/dev/null 2>&1
+.endif
 	-@mdo mount -t nullfs ${PWD} ${BASE_WORKDIR}/${SERVICE}/usr/src >/dev/null 2>&1
 .endif
 .if !exists(${BASE_WORKDIR}/${SERVICE}/home/provision/.ssh/authorized_keys)
